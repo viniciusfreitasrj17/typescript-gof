@@ -25,6 +25,7 @@
 	},
 	"dependencies": {
 		"express": "^4.17.3",
+		"isemail": "^3.2.0",
 		"morgan": "^1.10.0",
 		"validator": "^13.7.0"
 	}

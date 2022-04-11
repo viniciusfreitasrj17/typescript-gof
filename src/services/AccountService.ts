@@ -1,32 +1,43 @@
 import { Account } from '../models/Account';
+import { emailValidator } from '../utils/EmailValidator';
 
 export class AccountService {
-  private static _accountServiceInstance: AccountService | null = null;
+  private static _accountService: AccountService | null = null;
   private accounts: Account[] = [];
 
   private constructor() {}
 
-  static get accountServiceInstance(): AccountService {
-    if (this._accountServiceInstance === null) {
-      this._accountServiceInstance = new AccountService();
+  static get accountService(): AccountService {
+    if (this._accountService === null) {
+      this._accountService = new AccountService();
     }
 
-    return this._accountServiceInstance;
+    return this._accountService;
   }
 
   add(account: Account): void {
     try {
-      this.accounts.push(account);
-    } catch (error) {
+      if (!emailValidator.isEmail(account.email)) {
+        throw new Error('Invalid Email');
+      } else {
+        this.accounts.push(account);
+      }
+    } catch (error: any) {
       console.log(error);
+      throw Error(error.message);
     }
   }
 
   remove(index: number): void {
     try {
-      this.accounts.splice(index, 1);
-    } catch (error) {
+      if (!this.accounts.at(index)) {
+        throw new Error('Not found');
+      } else {
+        this.accounts.splice(index, 1);
+      }
+    } catch (error: any) {
       console.log(error);
+      throw Error(error.message);
     }
   }
 
@@ -34,11 +45,12 @@ export class AccountService {
     let accounts: Account[] | [] = [];
     try {
       accounts = this.accounts;
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      throw Error(error.message);
     }
     return accounts;
   }
 }
 
-export const { accountServiceInstance } = AccountService;
+export const { accountService } = AccountService;

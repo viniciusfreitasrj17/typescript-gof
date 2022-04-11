@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { accountControllerInstance } from './controllers/AccountController';
+import { accountController } from './controllers/AccountController';
 
 const routes: Router = Router();
 
@@ -15,8 +15,8 @@ routes.get('/health', (_: Request, res: Response): Response<unknown> => {
 });
 
 // Account Routes
-routes.get('/accounts', accountControllerInstance.show);
-routes.post('/accounts', accountControllerInstance.add);
-routes.delete('/accounts/:index', accountControllerInstance.remove);
+routes.get('/accounts', accountController.show);
+routes.post('/accounts', accountController.add);
+routes.delete('/accounts/:index', accountController.remove);
 
 export { routes };
